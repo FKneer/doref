@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from example_method import *
-from gui import *
+
 #------------------------------------------------------------
 # example_project.py
 # Smart vacuum cleaner
@@ -16,7 +16,6 @@ s = System("Vacuum Cleaner", w)
 p = Project("Adaptive Control", s)
 
 cd("/*/Adaptive Control")
-node("/*/Adaptive Control").dump()
 Folder("Protocols")
 Folder("Specifications")
 cd("./-")
@@ -86,156 +85,6 @@ Arrow(node('./*/Red-yellow'), node('./*/Green'))
 Arrow(node('./*/Green'), node('./*/Yellow'))
 Arrow(node('./*/Yellow'), node('./*/Red'))
 
-
-#TODO delete Test REQ
-cd("/*/Customer Requirements")
-Req("Test: Bold Italic Itemize", '''
-
-**bold**
-
-(**bold**)
-[**bold**]
-{**bold**}
-
-**bold**.
-**bold**,
-**bold**:
-**bold**;
-**bold**!
-**bold**?
-
-A**bold**
-**bold**B
-A**bold**B
-
-** bold**
-**bold **
-** bold **
-
-**bold over
------------
------------
------------
------------
------------
------------
------------
-two lines**
-
-
-
-*italic*
-
-(*italic*)
-[*italic*]
-{*italic*}
-
-*italic*.
-*italic*,
-*italic*:
-*italic*;
-*italic*!
-*italic*?
-
-A*italic*
-*italic*B
-A*italic*B
-
-*italic *
-* italic*
-* italic *
-
-*italic over
------------
------------
------------
------------
------------
------------
------------
-two lines*
-
-
-
-**bold and italic**
-
-** bold and italic**
-**bold and italic **
-** bold and italic **
-
-**bold and italic
------------
------------
------------
------------
------------
------------
------------
-over tow lines**
-
-
-
-* *italic*
-* **bold**
-* A * B + C * F = 12
-
-* 1
- * 2
-  * 3
-   * 4
-* 1
- * 2
-  * 3
- * 2
-  * 3
-   * 4
-
-Implicit Hyperlink Targets -> Reference to a Chapter, see `/*/Customer Requirements`_
-Implicit Hyperlink Targets -> Reference to a Node, see `/*/Power`_
-
-
-External hyperlinks -> `Python <http://www.python.org/>`_
-External hyperlinks -> `www.python.org/  <http://www.python.org/>`_
-''', {"test": "Test 1",
-      "bla": 2,
-      "blub": [3, 4, 5, 6],
-      "Trace": [r"/*/Power", r"/*/Test", r"/*/Test/*/Test", r"/*/Test/*/Test/*/3. Test"]})
-cd("./-")
-Req("Test", "Test 1: Find same name in tree")
-#Req("Test", "Duplicate Name Test")
-cd("./-")
-Req("Test", "Test: 2 Find same name in tree")
-cd("./-")
-Req("3. Test", "Test 3: Find a node after tow nodes with the same name")
-Req("Whitespace Test", '''
-This
-Section dewscrubes       the platformas on which the system should run
-
-''')
-Req("[KAF03] Dorobo-Board: CAN-Message Erzeugung",
-    "Die Software des Dorobo-Boards erzeugt CAN-Messages",
-    {'Priority': 1})
-
-Req("[KAF04] Dorobo-Board: Antwort CAN-Message versenden",
-    "Die Software des Dorobo-Board antwortet dem Android-Gerät mit erzeugter CAN-Message, wenn Nachricht von Android-Gerät empfangen wurde [Link auf 1 und 3]",
-    {'Priority': 1,
-     'Trace': ["./*/[KAF03] Dorobo-Board: CAN-Message Erzeugung", "./*/[KAF05] Dorobo-Board: Empfang von CAN-Messages"]})
-
-
-Req("[KAF05] Dorobo-Board: Empfang von CAN-Messages",
-    "Die Software Des Dorobo-Board empfängt CAN-Messages vom Android-Gerät",
-    {'Priority': 1})
-
-
-print("-------------------------------")
-print(node("/*/Test").id, node("/*/Test/*/Test").id, node("/*/Test/*/3").id)
-print("-------------------------------")
-
-
-#w.dump()
+w.dump()
 
 w.genPDF()
-#node("/").genHTML(["ref", "istar", "ieee830"])
-
-
-ShowTree(node("/"))
