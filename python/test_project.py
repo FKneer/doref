@@ -226,6 +226,21 @@ Req("[KAF05] Dorobo-Board: Empfang von CAN-Messages",
     "Die Software Des Dorobo-Board empfängt CAN-Messages vom Android-Gerät",
     {'Priority': 1})
 
+Table("Test Table Ref",
+      [
+          ['Req', 'Ref'],
+          ['Customer-Relationship-Management', """
+
+           * item
+           * item
+           * item
+
+           *bold*
+           **italic**
+
+            `/*/Customer Requirements`_
+           """]
+      ], "This table test Ref.")
 
 print("-------------------------------")
 print(node("/*/Test").id, node("/*/Test/*/Test").id, node("/*/Test/*/3").id)
@@ -238,4 +253,4 @@ w.genPDF()
 #node("/").genHTML(["ref", "istar", "ieee830"])
 
 
-ShowTree(node("/"))
+#ShowTree(node("/"))
