@@ -3,6 +3,7 @@
 
 from example_method import *
 from gui import *
+from plantuml import *
 #------------------------------------------------------------
 # example_project.py
 # Smart vacuum cleaner
@@ -241,6 +242,13 @@ Table("Test Table Ref",
             `/*/Customer Requirements`_
            """]
       ], "This table test Ref.")
+
+PlantUML("UML Test","""
+Alice -> Bob: A
+Bob --> Alice: B
+Alice -> Bob: C
+Bob --> Alice: D
+""", "Dies ist ein Test von plantUML Seq-Diagramm")
 
 print("-------------------------------")
 print(node("/*/Test").id, node("/*/Test/*/Test").id, node("/*/Test/*/3").id)
