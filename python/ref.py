@@ -989,33 +989,37 @@ class Node(object):
             n.genTeX(outArray, level, index, number)
             index += 1
 
-    def genRst(self):
-        vDir = os.path.abspath(Document.path + "/rst/")
-        filename = vDir + "/" + self.name
-        filename = filename.replace(' ', '_')
-        if not os.path.isdir(vDir):
-            os.mkdir(vDir)
-        opfile = filename + '.rst'
-        outfile = open(opfile, 'w', encoding='utf-8')
+    def genRst(self, index):
+        if self is not index:
+            vDir = os.path.abspath(Document.path + "/rst/")
+            filename = vDir + "/" + self.name
+            filename = filename.replace(' ', '_')
+            if not os.path.isdir(vDir):
+                os.mkdir(vDir)
+            opfile = filename + '.rst'
+            outfile = open(opfile, 'w', encoding='utf-8')
 
-        title = self.getType() + ' "' + self.name + '"\n'
-        rstout = [title,
-                  ("=" * (len(title) - 1)) + "\n\n"]
-        if len(self.nodes) > 0:
-            rstout.append("Content:\n\n")
-            rstout.append(".. toctree::" + "\n")
-            rstout.append("  :maxdepth: 4" + "\n\n")
+            title = self.getType() + ' "' + self.name + '"\n'
+            rstout = [title,
+                      ("=" * (len(title) - 1)) + "\n\n"]
+            if len(self.nodes) > 0:
+                rstout.append("Content:\n")
+                rstout.append("--------\n\n")
+                rstout.append(".. toctree::" + "\n")
+                rstout.append("  :titlesonly:" + "\n")
+                rstout.append("  :maxdepth: 4" + "\n\n")
+                for n in self.nodes:
+                    if n is not index:
+                        content = n.name + ".rst"
+                        content = content.replace(' ', '_')
+                        rstout.append('  ' + content + "\n")
+            self.genRstBody(rstout)
+
+            for l in rstout:
+                outfile.writelines(l)
+            outfile.close()
             for n in self.nodes:
-                content = n.name + ".rst"
-                content = content.replace(' ', '_')
-                rstout.append('  ' + content + "\n")
-        self.genRstBody(rstout)
-
-        for l in rstout:
-            outfile.writelines(l)
-        outfile.close()
-        for n in self.nodes:
-            n.genRst()
+                n.genRst(index)
 
     def genRstBody(self, rstOut):
         pass
@@ -1062,23 +1066,15 @@ def getUnicodeStr(tmpStr):
 
 
 # -------------------------------------------------------------------------------------------------------------------
-# World (Discourse Perspective)
-class World(Node):
+
+class System(Node):
     """
-    This class represents the root of the RE tree. Think of it as the universe of discourse. It is the
-    subject world which is relevant to the system to be developed. It embraces the system and its context.
-    For instance, if the system to be  developed is a calender tool, the world could be described as
-    *Personal Information Management*.
+    Dieses Sprachelement repräsentiert ein System, welches entwickelt werden soll. Ein System kann aus
+    Systemen bestehen. Ein System besitzt einen Kontext. Externe Systeme, die bereits existieren und
+    außerhalb des Projektaufgabenbereichs liegen, werden nicht als System, sondern als Teil des Kontextes
+    aufgefasst. Jedes System besitzt einen Kontext. Dies führt zu der Situation, dass die Einordnung als
+    System oder Kontext nicht absolut sondern relativ zum Blickwinkel ist.
     """
-
-    ID = 0  # world-unique ID
-
-    def __init__(self, name):
-        Node.__init__(self, name, None)
-
-    def getID(self):
-        self.ID += 1
-        return self.ID
 
     def genRstConf(self):
         vDir = os.path.abspath(Document.path)
@@ -1134,8 +1130,54 @@ class World(Node):
             outfile.writelines(l)
         outfile.close()
 
-    def genRst(self):
-        pass
+    def genRst(self, index):
+        if self is not index:
+            vDir = os.path.abspath(Document.path + "/rst/")
+            filename = vDir + "/" + self.name
+            filename = filename.replace(' ', '_')
+            if not os.path.isdir(vDir):
+                os.mkdir(vDir)
+            opfile = filename + '.rst'
+            outfile = open(opfile, 'w', encoding='utf-8')
+
+            title = self.getType() + ' " ' + self.name + '"\n'
+            rstout = [title,
+                      ("=" * (len(title) - 1)) + "\n\n"]
+            sub = 0
+            project = 0
+            for n in self.nodes:
+                if isinstance(n, System) and n is not index:
+                    sub += 1
+                if isinstance(n, Project):
+                    project += 1
+
+            if sub > 0:
+                rstout.append("\nSub-System:" + "\n")
+                rstout.append("-----------" + "\n\n")
+                rstout.append(".. toctree::" + "\n")
+                rstout.append(" :titlesonly:" + "\n")
+                rstout.append(" :maxdepth: 4" + "\n\n")
+                for n in self.nodes:
+                    if isinstance(n, System) and self is not index:
+                        content = n.name + ".rst"
+                        content = content.replace(' ', '_')
+                        rstout.append(" " + content + "\n")
+            if project > 0:
+                rstout.append("\nDeveloped by Project:" + "\n")
+                rstout.append("---------------------" + "\n\n")
+                rstout.append(".. toctree::" + "\n")
+                rstout.append(" :titlesonly:" + "\n")
+                rstout.append(" :maxdepth: 4" + "\n\n")
+                for n in self.nodes:
+                    if isinstance(n, Project):
+                        content = n.name + ".rst"
+                        content = content.replace(' ', '_')
+                        rstout.append(" " + content + "\n")
+            for l in rstout:
+                outfile.writelines(l)
+            outfile.close()
+            for n in self.nodes:
+                n.genRst(index)
 
     def genHTML(self, modules):
         """
@@ -1156,24 +1198,65 @@ class World(Node):
         title = self.getType() + ' " ' + self.name + '"\n'
         rstout = [title,
                   ("=" * (len(title) - 1)) + "\n\n"]
-        if len(self.nodes) > 0:
-            rstout.append("Content:\n\n")
+        print(self.parent.name)
+        if self.parent is not None:
+            rstout.append("Context:\n")
+            rstout.append("--------\n\n")
+            parent = self.parent
+            depp = 2
+            print(parent.name)
+            while parent.parent is not None:
+                parent = parent.parent
+                print(parent.name)
+                depp += 1
             rstout.append(".. toctree::" + "\n")
-            rstout.append("  :maxdepth: 4" + "\n\n")
+            rstout.append(" :titlesonly:" + "\n")
+            rstout.append(" :maxdepth: " + str(depp) + "\n\n")
+            content = parent.name + ".rst"
+            content = content.replace(' ', '_')
+            parent.genRst(self)
+            rstout.append(' ' + content + "\n")
+        sub = 0
+        project = 0
+        for n in self.nodes:
+            if isinstance(n, System):
+                sub += 1
+            if isinstance(n, Project):
+                project += 1
+
+        if sub > 0:
+            rstout.append("\nSub-System:" + "\n")
+            rstout.append("-----------" + "\n\n")
+            rstout.append(".. toctree::" + "\n")
+            rstout.append(" :titlesonly:" + "\n")
+            rstout.append(" :maxdepth: 4" + "\n\n")
             for n in self.nodes:
-                content = n.name + ".rst"
-                content = content.replace(' ', '_')
-                rstout.append('  ' + content + "\n")
+                if isinstance(n, System):
+                    content = n.name + ".rst"
+                    content = content.replace(' ', '_')
+                    rstout.append(" " + content + "\n")
+        if project > 0:
+            rstout.append("\nDeveloped by Project:" + "\n")
+            rstout.append("---------------------" + "\n\n")
+            rstout.append(".. toctree::" + "\n")
+            rstout.append(" :titlesonly:" + "\n")
+            rstout.append(" :maxdepth: 4" + "\n\n")
+            for n in self.nodes:
+                if isinstance(n, Project):
+                    content = n.name + ".rst"
+                    content = content.replace(' ', '_')
+                    rstout.append(" " + content + "\n")
         self.genRstBodyM(rstout, modules)
 
         for l in rstout:
             outfile.writelines(l)
         outfile.close()
         for n in self.nodes:
-            n.genRst()
+            n.genRst(self)
 
         os.system('sphinx-build -b html ' + Document.path + "/rst " + Document.path + "/html")
         print("")
+
 
     def genRstBodyM(self, rstOut, modules):
         rstOut.append("\n\n")
@@ -1193,15 +1276,23 @@ class World(Node):
         rstOut.append("\n")
 
 
-class System(Node):
+# World (Discourse Perspective)
+class World(System):
     """
-    Dieses Sprachelement repräsentiert ein System, welches entwickelt werden soll. Ein System kann aus
-    Systemen bestehen. Ein System besitzt einen Kontext. Externe Systeme, die bereits existieren und
-    außerhalb des Projektaufgabenbereichs liegen, werden nicht als System, sondern als Teil des Kontextes
-    aufgefasst. Jedes System besitzt einen Kontext. Dies führt zu der Situation, dass die Einordnung als
-    System oder Kontext nicht absolut sondern relativ zum Blickwinkel ist.
+    This class represents the root of the RE tree. Think of it as the universe of discourse. It is the
+    subject world which is relevant to the system to be developed. It embraces the system and its context.
+    For instance, if the system to be  developed is a calender tool, the world could be described as
+    *Personal Information Management*.
     """
-    pass
+
+    ID = 0  # world-unique ID
+
+    def __init__(self, name):
+        Node.__init__(self, name, None)
+
+    def getID(self):
+        self.ID += 1
+        return self.ID
 
 
 class Context(Node):  # related to a system
@@ -1218,20 +1309,24 @@ class Concept(Node):  # something in the context
 # Documents (Product Perspective)
 
 class Project(Node):
-    """ This class is the topmost element for organizing documentation. It contains folders.
+    """ This class is the topmost element for organizing documentation. It contains Products.
 
     """
     pass
 
+class Product(Node):
+    """ Base class for Products
 
-class Folder(Node):
+    """
+
+class Folder(Product):
     """ This class is a container for storing documents.
 
     """
     pass
 
 
-class Document(Node):
+class Document(Product):
     """This class presents a document in a RE process.
 
     This class is intended to derive classes, which represent particular documents types
@@ -1356,7 +1451,7 @@ class Document(Node):
                 if any(currentFile.lower().endswith(ext) for ext in exts):
                     os.remove(os.path.join(tmpRoot, currentFile))
 
-    def genRst(self):
+    def genRst(self, index):
         vDir = os.path.abspath(Document.path + "/rst/")
         filename = vDir + "/" + self.name
         filename = filename.replace(' ', '_')

@@ -12,8 +12,16 @@ from gui import *
 # Example RE Sceanrio: Stakeholder have conflicts
 
 w = World("My Smart Home")
-s = System("Vacuum Cleaner", w)
-p = Project("Adaptive Control", s)
+a = System("A",w)
+b = System("B",w)
+c = System("C",w)
+A1 = System("A1",a)
+A2 = System("A2",a)
+B1 = System("Vacuum Cleaner", b)
+B11 = System("B11",B1)
+C1 = System("C1",c)
+
+p = Project("Adaptive Control", B1)
 
 cd("/*/Adaptive Control")
 node("/*/Adaptive Control").dump()
@@ -250,7 +258,7 @@ print("-------------------------------")
 #w.dump()
 
 w.genPDF()
-#node("/").genHTML(["ref", "istar", "ieee830"])
+node("/*/Vacuum Cleaner").genHTML(["ref", "istar", "ieee830"])
 
 
 #ShowTree(node("/"))
