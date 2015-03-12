@@ -612,8 +612,6 @@ def changeString(old, first, last, new):
     return newString
 
 
-
-
 def findReference(text):
     expression = r' `([^`]* )`\_'
     replace = r' (-ref-)\1(-ref-)'
@@ -913,7 +911,6 @@ class Node(object):
     def getReference(self):
         return " " + self.name + " (" + self.getLabel() + "-" + str(self.id) + ") " + \
                r"on page \pageref{" + self.name + str(self.id) + "} "
-
 
     def delNode(self, n):
         self.nodes.remove(n)
@@ -1257,7 +1254,6 @@ class System(Node):
         os.system('sphinx-build -b html ' + Document.path + "/rst " + Document.path + "/html")
         print("")
 
-
     def genRstBodyM(self, rstOut, modules):
         rstOut.append("\n\n")
         rstOut.append("Source Code Documentation" + "\n")
@@ -1312,12 +1308,87 @@ class Project(Node):
     """ This class is the topmost element for organizing documentation. It contains Products.
 
     """
-    pass
+    def genRst(self, index):
+        vDir = os.path.abspath(Document.path + "/rst/")
+        filename = vDir + "/" + self.name
+        filename = filename.replace(' ', '_')
+        if not os.path.isdir(vDir):
+            os.mkdir(vDir)
+        opfile = filename + '.rst'
+        outfile = open(opfile, 'w', encoding='utf-8')
+
+        title = self.getType() + ' " ' + self.name + '"\n'
+        rstout = [title, ("=" * (len(title) - 1)) + "\n\n"]
+        sub = 0
+        folder = 0
+        product = 0
+        workflow = 0
+        for n in self.nodes:
+            if isinstance(n, Project) and n is not index:
+                sub += 1
+            if isinstance(n, Folder):
+                folder += 1
+            if isinstance(n, Product):
+                product += 1
+            if isinstance(n, Workflow):
+                workflow += 1
+        product = product - folder
+        if sub > 0:
+            rstout.append("\nSub-Projects:" + "\n")
+            rstout.append("-------------" + "\n\n")
+            rstout.append(".. toctree::" + "\n")
+            rstout.append(" :titlesonly:" + "\n")
+            rstout.append(" :maxdepth: 4" + "\n\n")
+            for n in self.nodes:
+                if isinstance(n, Project) and self is not index:
+                    content = n.name + ".rst"
+                    content = content.replace(' ', '_')
+                    rstout.append(" " + content + "\n")
+        if folder > 0:
+            rstout.append("\nFolder:" + "\n")
+            rstout.append("-------" + "\n\n")
+            rstout.append(".. toctree::" + "\n")
+            rstout.append(" :titlesonly:" + "\n")
+            rstout.append(" :maxdepth: 4" + "\n\n")
+            for n in self.nodes:
+                if isinstance(n, Folder):
+                    content = n.name + ".rst"
+                    content = content.replace(' ', '_')
+                    rstout.append(" " + content + "\n")
+        if product > 0:
+            rstout.append("\nResults in:" + "\n")
+            rstout.append("-----------" + "\n\n")
+            rstout.append(".. toctree::" + "\n")
+            rstout.append(" :titlesonly:" + "\n")
+            rstout.append(" :maxdepth: 4" + "\n\n")
+            for n in self.nodes:
+                if isinstance(n, Product) and not isinstance(n, Folder):
+                    content = n.name + ".rst"
+                    content = content.replace(' ', '_')
+                    rstout.append(" " + content + "\n")
+        if workflow > 0:
+            rstout.append("\nFollows:" + "\n")
+            rstout.append("--------" + "\n\n")
+            rstout.append(".. toctree::" + "\n")
+            rstout.append(" :titlesonly:" + "\n")
+            rstout.append(" :maxdepth: 4" + "\n\n")
+            for n in self.nodes:
+                if isinstance(n, Workflow):
+                    content = n.name + ".rst"
+                    content = content.replace(' ', '_')
+                    rstout.append(" " + content + "\n")
+        for l in rstout:
+            outfile.writelines(l)
+        outfile.close()
+        for n in self.nodes:
+            n.genRst(index)
+
 
 class Product(Node):
     """ Base class for Products
 
     """
+
 
 class Folder(Product):
     """ This class is a container for storing documents.
