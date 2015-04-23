@@ -213,16 +213,6 @@ Req("Expandable", '''
 
 ''')
 
-#TODO Delet Test
-
-PlantUML("UML Test", """
-Alice -> Bob: A
-Bob --> Alice: B
-Alice -> Bob: C
-Bob --> Alice: D
-""", "Test of plantUML seq-diagram")
-
-
 cd("/*/Goal-oriented RE")
 DevelopGoalModel("Develop Goal Model Meeting Scheduler")
 cd("./-")
