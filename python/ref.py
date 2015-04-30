@@ -1336,11 +1336,13 @@ class Document(Node):
                   r'\listoftables' + '\n\n']
         Node.genTeX(self, texout, 0, 1, "")
         texout.append(r'\end{document}' + '\n')
+        out = ""
         for i in texout:
             if not isinstance(i, str):
                 i = "\n".join(i)
-            i = parseString(i)
-            outfile.writelines(i)
+            out += i
+        out = parseString(out)
+        outfile.writelines(out)
         outfile.close()
 
         os.system('pdflatex -shell-escape -synctex=1 -interaction=batchmode -output-directory=../doc/pdf/ ' + opfile)
@@ -1705,6 +1707,8 @@ class Figure(TextElement):
             properties['Type'] = 'Information'
         TextElement.__init__(self, caption, text, properties, pNode)
         self.figure = figure
+        if self.figure is not None and set("äöü").intersection(set(self.figure)):
+            raise TypeError("No umlaut allowed in file names!")
 
     def bodyTeX(self):
         options = []
@@ -1754,8 +1758,16 @@ class Model(Figure):
             properties['Type'] = 'Requirement'
         Figure.__init__(self, caption, None, text, properties, pNode)
 
-    def bodyTeX(self):
+    def cleanFileName(self):
         tmpname = self.name.replace(' ', '_')
+        tmpname = tmpname.replace('ä', 'ae')
+        tmpname = tmpname.replace('ö', 'oe')
+        tmpname = tmpname.replace('ü', 'ue')
+        tmpname = tmpname.replace('ß', 'ss')
+        return tmpname
+
+    def bodyTeX(self):
+        tmpname = self.cleanFileName()
         dot = Digraph(comment=tmpname)
         dot.format = 'eps'
         # dot.charset = 'UTF-8'

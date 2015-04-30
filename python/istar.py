@@ -1044,7 +1044,7 @@ class GoalModel(Model):
         :param overwrite:
         :param show:
         """
-        tmpname = self.name.replace(' ', '_')
+        tmpname = self.cleanFileName()
         dot = Digraph(comment=tmpname)
         dot.format = 'png'
         # dot.engine = 'circo'
@@ -1165,7 +1165,7 @@ class Actor(GoalModel):
         :param overwrite:
         :param show:
         """
-        tmpname = self.name.replace(' ', '_')
+        tmpname = self.cleanFileName()
         dot = Digraph(comment=tmpname)
         dot.format = 'png'
         # dot.engine = 'circo'

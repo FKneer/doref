@@ -75,7 +75,7 @@ Table("Actor Description",
 cd("/*/Specific Requirements")
 Chapter("Models")
 cd("./-")
-GenericModel("States of a Traffic Light", "This model shows the states of a traffic light in Germany.")
+GenericModel("States of a Traffic Light ä ü ö ß", "This model shows the states of a traffic light in Germany.")
 cd('./-')
 Circle("Red")
 Circle("Red-yellow")
@@ -225,7 +225,13 @@ Req("[KAF04] Dorobo-Board: Antwort CAN-Message versenden",
 
 Req("[KAF05] Dorobo-Board: Empfang von CAN-Messages",
     "Die Software Des Dorobo-Board empfängt CAN-Messages vom Android-Gerät",
-    {'Priority': 1})
+    {'Priority': """
+
+ * item
+ * item
+ * item
+
+ """})
 
 Table("Test Table Ref",
       [
