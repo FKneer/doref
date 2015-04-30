@@ -9,8 +9,6 @@ from plantuml import *
 # A fragmentary project documentation
 #------------------------------------------------------------
 
-# Example RE Sceanrio: Stakeholder have conflicts
-
 w = World("My Smart Home")
 cd("./-")
 s = System("Vacuum Cleaner")
@@ -26,7 +24,7 @@ cd("./-")
 
 IEEE830SRS("Software Requirements for Adaptive Control of Vacuum Cleaner",
            [["Erik Kamsties and Fabian Kneer", "RE Research Group", "FH Dortmund"]],
-           {'language': 'german', 'paper': 'a4', 'font': '11pt'})
+           {'language': 'english', 'paper': 'a4', 'font': '11pt'})
 
 
 cd("/*/Specific Requirements")
@@ -52,39 +50,20 @@ cd("./-")
 Inf("The vacuum cleaner should not disturb the persons living in the apartment.")
 cd("..")
 
-
-Inf("Porto (port. Aussprache ['poɾtu]) ist die "
-    "Hauptstadt des gleichnamigen Distriktes in "
-    "Portugal und liegt am Douro vor dessen Mündung "
-    "in den Atlantischen Ozean. Mit circa 237.000 Einwohnern "
-    "(port. portuenses; dt. Portuenser genannt) ist sie "
-    "nach Lissabon und ihrer Nachbarstadt Vila Nova de Gaia "
-    "die drittgrößte Stadt des Landes. ")
-
-
-Inf('''Der rund 1,29 Millionen[3]
-    Einwohner zählende Ballungsraum Grande Porto rangiert
-    landesweit jedoch an zweiter Stelle. Porto ist eine der ältesten
-    europäischen Städte, sie wird gern als die „Hauptstadt
-    des Nordens“ bezeichnet.''')
-
-
 Figure("RE - World, Documents, and Workflows", './_example_project/model.png',
        "This figure shows the main corner stones of RE.",
        {'size': 'fit'})
 
 
-Table("Actor Description",
+Table("Characteristics of good requirements",
       [
-          ['Term', 'Description'],
-          ['Customer-Relationship-Management',
-           'Customer-Relationship-Management, kurz CRM (dt. Kundenbeziehungsmanagement) '
-           'oder Kundenpflege, bezeichnet die konsequente Ausrichtung einer '
-           'Unternehmung auf ihre Kunden und die systematische Gestaltung der '
-           'Kundenbeziehungsprozesse. Die dazugehörende Dokumentation und Verwaltung '
-           'von Kundenbeziehungen ist ein wichtiger Baustein und ermöglicht ein '
-           'vertieftes Beziehungsmarketing.  ']
-      ], "This table defines some terms.")
+          ['Characteristic', 'Explanation'],
+          ['Complete', 'The requirement is fully stated in one place with no missing information.',
+           'Consistent', 'The requirement does not contradict any other requirement and is fully consistent with '
+                         'all authoritative external documentation.']
+      ], "The characteristics of good requirements are variously stated by different writers, with each writer "
+         "generally emphasizing the characteristics most appropriate to their general discussion or the specific "
+         "technology domain being addressed. However, the following characteristics are generally acknowledged")
 
 
 cd("/*/Specific Requirements")
@@ -116,3 +95,17 @@ w.dump()
 
 w.genPDF()
 w.genHTML(["ref", "ieee830"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
