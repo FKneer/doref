@@ -999,7 +999,8 @@ class Node(object):
         outfile = open(opfile, 'w', encoding='utf-8')
 
         title = self.getType() + ' "' + self.name + '"\n'
-        rstout = [title,
+        rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
                   ("=" * (len(title) - 1)) + "\n\n"]
         if len(self.nodes) > 0:
             rstout.append("Content:\n\n")
@@ -1154,7 +1155,8 @@ class World(Node):
         outfile = open(opfile, 'w', encoding='utf-8')
 
         title = self.getType() + ' " ' + self.name + '"\n'
-        rstout = [title,
+        rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
                   ("=" * (len(title) - 1)) + "\n\n"]
         if len(self.nodes) > 0:
             rstout.append("Content:\n\n")
@@ -1368,7 +1370,8 @@ class Document(Node):
         outfile = open(opfile, 'w', encoding='utf-8')
 
         title = self.getType() + ' "' + self.name + '"\n'
-        rstout = [title,
+        rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
                   ("=" * (len(title) - 1)) + "\n\n"]
         content = self.name + ".pdf"
         content = content.replace(' ', '_')

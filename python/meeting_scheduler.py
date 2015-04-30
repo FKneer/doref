@@ -386,9 +386,13 @@ MakeJudgements("Make judgement after inspection of goal model", labelList={
     '/*/Meeting Participant/*/User Friendly': 'Conflict',
     '/*/Meeting Participant/*/Richer Medium': 'Conflict',
     '/*/Meeting Initiator/*/Low Effort': 'Partially Satisfied',
-    '/*/Meeting Initiator/*/Quick': 'Partially Satisfied'})
+    '/*/Meeting Initiator/*/Quick': 'Partially Satisfied'}).do()
 
-PropagateLabels("First Propagate Labels after Human Judgement", goalModel=node("/*/SD-Model of Meeting Schedule"))
+PropagateLabels("First Propagate Labels after Human Judgement",
+                guideline="Propagate with new values after a human judgement. For more information see "
+                          ":ref:`/*/Initially Propagate Labels`",
+                goalModel=node("/*/SD-Model of Meeting Schedule"))
+
 
 Show("/*/SD-Model")
 Show("/*/SD-Model/*/Meeting Scheduler")

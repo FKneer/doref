@@ -666,6 +666,7 @@ Quick Start Guide for iStar
 
     Inside a SD-Model are Actors. ::
 
+        cd("/*/SD-Model of Meeting Scheduler")
         Actor("Meeting Initiator",
               "The Meeting Initiator organizes a meeting (see Domain Theory). The Strategic "
               "Resource (SR) model shows the resources of the Meeting Initiator.", {'size': 'fit'})
@@ -679,6 +680,7 @@ Quick Start Guide for iStar
     After adding the actors, the relationships between them must be modeled.
     Add all dependuums between the actors to the Goal Model. ::
 
+        cd('/*/SD-Model of Meeting Scheduler')
         Goal("Attends Meeting D")
         Goal("Meeting Be Scheduled D")
         Task("Enter Date Range D")
@@ -688,6 +690,7 @@ Quick Start Guide for iStar
 
     Then add the DependencyLinks. ::
 
+        cd('/*/SD-Model of Meeting Scheduler')
         DependencyLink(node("/*/SD-Model/*/Meeting Scheduler"), node("/*/Meeting Initiator"),
                  node("/*/Meeting Be Scheduled D"))
         DependencyLink(node("/*/SD-Model/*/Meeting Scheduler"), node("/*/Meeting Participant"),
@@ -820,10 +823,11 @@ Quick Start Guide for iStar
     First define a general Acticity. ::
 
         EvaluateGoalModel("Evaluate Goal Model")
-        cd("./-")
+
 
     Then add initial Activities. ::
 
+        cd("Evaluate Goal Model")
         FindLeafs("Find Leaves for Analysis", goalModel=node("/*/SD-Model of Meeting Schedule")).do()
         FindRoot("Find Root", goalModel=node("/*/SD-Model of Meeting Schedule")).do()
 
