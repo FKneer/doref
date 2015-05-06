@@ -3,7 +3,10 @@
 
 from ieee830 import *
 from istar import *
+from ref import *
 from plantuml import *
+from gui import *
+
 World("Office Automation")
 cd("./-")
 System("Meeting Scheduler System")
@@ -386,13 +389,16 @@ MakeJudgements("Make judgement after inspection of goal model", labelList={
     '/*/Meeting Initiator/*/Low Effort': 'Partially Satisfied',
     '/*/Meeting Initiator/*/Quick': 'Partially Satisfied'}).do()
 
-PropagateLabels("First Propagate Labels after Human Judgement", goalModel=node("/*/SD-Model of Meeting Schedule")).do()
+PropagateLabels("First Propagate Labels after Human Judgement",
+                guideline="Propagate with new values after a human judgement. For more information see "
+                          ":ref:`/*/Initially Propagate Labels`",
+                goalModel=node("/*/SD-Model of Meeting Schedule"))
 
 Show("/*/SD-Model")
 Show("/*/SD-Model/*/Meeting Scheduler")
 Show("/*/Meeting Participant")
 Show("/*/Meeting Initiator")
 
-node("/").genHTML(["ref", "istar", "ieee830"])
+node("/*/Meeting Scheduler System").genHTML(["ref", "istar", "ieee830", "gui"])
 
-
+ShowTree(node("/*/Software Requirements for Meeting Scheduler System"))

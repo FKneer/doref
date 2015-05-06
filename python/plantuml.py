@@ -1,6 +1,55 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+'''
+Introduction
+============
+PlantUML is an Open Source project that allows to quickly write: • Sequence diagram,
+
+ * Usecase diagram,
+ * Class diagram,
+ * Activity diagram,
+ * Component diagram, • State diagram,
+ * Object diagram.
+
+Diagrams are defined using a simple and intuitive language, see `PlantUML Language Reference Guide
+<http://plantuml.sourceforge.net/PlantUML_Language_Reference_Guide.pdf>`_ .
+
+Example
+=======
+A sequence diagram:
+
+.. figure:: ../../python/_plantUML/simple_seq_example.png
+    :align: center
+
+    Figure 2: Simple sequence diagram example
+
+is written in PlanUML as: ::
+
+    @startuml
+    Alice -> Bob: A
+    Bob --> Alice: B
+    Alice -> Bob: C
+    Bob --> Alice: D
+    @enduml
+
+and in DOREF as: ::
+
+    PlantUML("UML Example","""
+             Alice -> Bob: A
+             Bob --> Alice: B
+             Alice -> Bob: C
+             Bob --> Alice: D
+             """, "Example: plantUML Seq-Diagramm")
+
+The PlantUML-Object needs:
+
+ * a name
+ * a PlanUML diagram definition without the @-Markup
+ * an optional description
+
+'''
+
 from ref import *
 
 class PlantUML(Model):
