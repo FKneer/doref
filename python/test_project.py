@@ -3,6 +3,7 @@
 
 from example_method import *
 from gui import *
+from plantuml import *
 #------------------------------------------------------------
 # example_project.py
 # Smart vacuum cleaner
@@ -82,7 +83,7 @@ Table("Actor Description",
 cd("/*/Specific Requirements")
 Chapter("Models")
 cd("./-")
-GenericModel("States of a Traffic Light", "This model shows the states of a traffic light in Germany.")
+GenericModel("States of a Traffic Light ä ü ö ß", "This model shows the states of a traffic light in Germany.")
 cd('./-')
 Circle("Red")
 Circle("Red-yellow")
@@ -232,7 +233,13 @@ Req("[KAF04] Dorobo-Board: Antwort CAN-Message versenden",
 
 Req("[KAF05] Dorobo-Board: Empfang von CAN-Messages",
     "Die Software Des Dorobo-Board empfängt CAN-Messages vom Android-Gerät",
-    {'Priority': 1})
+    {'Priority': """
+
+ * item
+ * item
+ * item
+
+ """})
 
 Table("Test Table Ref",
       [
@@ -250,6 +257,13 @@ Table("Test Table Ref",
            """]
       ], "This table test Ref.")
 
+PlantUML("UML Test","""
+Alice -> Bob: A
+Bob --> Alice: B
+Alice -> Bob: C
+Bob --> Alice: D
+""", "Dies ist ein Test von plantUML Seq-Diagramm")
+
 print("-------------------------------")
 print(node("/*/Test").id, node("/*/Test/*/Test").id, node("/*/Test/*/3").id)
 print("-------------------------------")
@@ -261,4 +275,4 @@ w.genPDF()
 node("/*/Vacuum Cleaner").genHTML(["ref", "istar", "ieee830"])
 
 
-#ShowTree(node("/"))
+ShowTree(node("/*/Software Requirements"))

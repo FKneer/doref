@@ -997,8 +997,9 @@ class Node(object):
             outfile = open(opfile, 'w', encoding='utf-8')
 
             title = self.getType() + ' "' + self.name + '"\n'
-            rstout = [title,
-                      ("=" * (len(title) - 1)) + "\n\n"]
+            rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
+                  ("=" * (len(title) - 1)) + "\n\n"]
             if len(self.nodes) > 0:
                 rstout.append("Content:\n")
                 rstout.append("--------\n\n")
@@ -1138,8 +1139,9 @@ class System(Node):
             outfile = open(opfile, 'w', encoding='utf-8')
 
             title = self.getType() + ' " ' + self.name + '"\n'
-            rstout = [title,
-                      ("=" * (len(title) - 1)) + "\n\n"]
+            rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
+                  ("=" * (len(title) - 1)) + "\n\n"]
             sub = 0
             project = 0
             for n in self.nodes:
@@ -1193,7 +1195,8 @@ class System(Node):
         outfile = open(opfile, 'w', encoding='utf-8')
 
         title = self.getType() + ' " ' + self.name + '"\n'
-        rstout = [title,
+        rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
                   ("=" * (len(title) - 1)) + "\n\n"]
 
         if self.parent is not None:
@@ -1502,11 +1505,13 @@ class Document(Product):
                   r'\listoftables' + '\n\n']
         Node.genTeX(self, texout, 0, 1, "")
         texout.append(r'\end{document}' + '\n')
+        out = ""
         for i in texout:
             if not isinstance(i, str):
                 i = "\n".join(i)
-            i = parseString(i)
-            outfile.writelines(i)
+            out += i
+        out = parseString(out)
+        outfile.writelines(out)
         outfile.close()
 
         os.system('pdflatex -shell-escape -synctex=1 -interaction=batchmode -output-directory=../doc/pdf/ ' + opfile)
@@ -1532,7 +1537,8 @@ class Document(Product):
         outfile = open(opfile, 'w', encoding='utf-8')
 
         title = self.getType() + ' "' + self.name + '"\n'
-        rstout = [title,
+        rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
                   ("=" * (len(title) - 1)) + "\n\n"]
         content = self.name + ".pdf"
         content = content.replace(' ', '_')
@@ -1871,6 +1877,8 @@ class Figure(TextElement):
             properties['Type'] = 'Information'
         TextElement.__init__(self, caption, text, properties, pNode)
         self.figure = figure
+        if self.figure is not None and set("äöü").intersection(set(self.figure)):
+            raise TypeError("No umlaut allowed in file names!")
 
     def bodyTeX(self):
         options = []
@@ -1920,8 +1928,16 @@ class Model(Figure):
             properties['Type'] = 'Requirement'
         Figure.__init__(self, caption, None, text, properties, pNode)
 
-    def bodyTeX(self):
+    def cleanFileName(self):
         tmpname = self.name.replace(' ', '_')
+        tmpname = tmpname.replace('ä', 'ae')
+        tmpname = tmpname.replace('ö', 'oe')
+        tmpname = tmpname.replace('ü', 'ue')
+        tmpname = tmpname.replace('ß', 'ss')
+        return tmpname
+
+    def bodyTeX(self):
+        tmpname = self.cleanFileName()
         dot = Digraph(comment=tmpname)
         dot.format = 'eps'
         # dot.charset = 'UTF-8'
