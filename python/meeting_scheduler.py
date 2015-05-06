@@ -3,9 +3,8 @@
 
 from ieee830 import *
 from istar import *
-from ref import *
 from plantuml import *
-w = World("Office Automation")
+World("Office Automation")
 cd("./-")
 System("Meeting Scheduler System")
 cd("./-")
@@ -16,7 +15,6 @@ cd("./-")
 Activity("Initiate RE Project", "In this activity, the folder structure and the (empty) documents are created.")
 
 cd("/*/Meeting Scheduler/*/Meeting Scheduler Development")
-# Folder("Protocols")
 Folder("Specifications")
 cd("./-")
 IEEE830SRS("Software Requirements for Meeting Scheduler System",
@@ -364,7 +362,7 @@ refineDependency(node("/*/Enter Avail Dates D"), node("/*/Find Agreeable Date Us
 refineDependency(node("/*/Agreement D"), node("/*/Agree To Date"), node("/*/Obtain Agreement"))
 refineDependency(node("/*/Attends Meeting D"), node("/*/Attend Meeting"), node("/*/Organize Meeting"))
 
-w.genPDF()
+node("/").genPDF()
 
 cd("/*/Goal-oriented RE")
 EvaluateGoalModel("Evaluate Goal Model")
@@ -386,9 +384,9 @@ MakeJudgements("Make judgement after inspection of goal model", labelList={
     '/*/Meeting Participant/*/User Friendly': 'Conflict',
     '/*/Meeting Participant/*/Richer Medium': 'Conflict',
     '/*/Meeting Initiator/*/Low Effort': 'Partially Satisfied',
-    '/*/Meeting Initiator/*/Quick': 'Partially Satisfied'})
+    '/*/Meeting Initiator/*/Quick': 'Partially Satisfied'}).do()
 
-PropagateLabels("First Propagate Labels after Human Judgement", goalModel=node("/*/SD-Model of Meeting Schedule"))
+PropagateLabels("First Propagate Labels after Human Judgement", goalModel=node("/*/SD-Model of Meeting Schedule")).do()
 
 Show("/*/SD-Model")
 Show("/*/SD-Model/*/Meeting Scheduler")

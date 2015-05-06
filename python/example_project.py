@@ -9,11 +9,11 @@ from plantuml import *
 # A fragmentary project documentation
 #------------------------------------------------------------
 
-w = World("My Smart Home")
+World("My Smart Home")
 cd("./-")
-s = System("Vacuum Cleaner")
+System("Vacuum Cleaner")
 cd("./-")
-p = Project("Adaptive Control")
+Project("Adaptive Control")
 
 
 
@@ -91,10 +91,10 @@ Arrow(node('./*/Red-yellow'), node('./*/Green'))
 Arrow(node('./*/Green'), node('./*/Yellow'))
 Arrow(node('./*/Yellow'), node('./*/Red'))
 
-w.dump()
+node("/").dump()
 
-w.genPDF()
-w.genHTML(["ref", "ieee830"])
+node("/").genPDF()
+node("/").genHTML(["ref", "ieee830"])
 
 
 
