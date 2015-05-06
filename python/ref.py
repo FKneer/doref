@@ -600,6 +600,7 @@ def parseString(string):
     string = string.replace("\t", " ")
     string = findLink(string)
     string = findReference(string)
+    string = findReferenceAfterUnicode(string)
     string = findBold(string)
     string = findItalics(string)
     string = findItemize(string)
@@ -611,8 +612,26 @@ def changeString(old, first, last, new):
     return newString
 
 
+
+
 def findReference(text):
-    expression = r' `([^`]* )`\\_ '
+    expression = r' `([^`]* )`\_'
+    replace = r' (-ref-)\1(-ref-)'
+    p = re.compile(expression, re.VERBOSE + re.UNICODE)
+    text = p.sub(replace, text)
+    split = text.split("(-ref-)")
+    out = []
+    for line in split:
+        if str(line).startswith(r'/*/'):
+            out.append(node(line).getReference())
+        else:
+            out.append(line)
+    text = "".join(out)
+    return text
+
+
+def findReferenceAfterUnicode(text):
+    expression = r' `([^`]* )`\\_'
     replace = r' (-ref-)\1(-ref-)'
     p = re.compile(expression, re.VERBOSE + re.UNICODE)
     text = p.sub(replace, text)
