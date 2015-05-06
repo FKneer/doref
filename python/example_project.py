@@ -8,8 +8,6 @@ from _test_project.structur import *
 # A fragmentary project documentation
 #------------------------------------------------------------
 
-# Example RE Sceanrio: Stakeholder have conflicts
-
 node("/").dump()
 
 node("/").genPDF()
