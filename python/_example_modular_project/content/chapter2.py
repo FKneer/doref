@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 
 
-from _test_project.structur import *
+from example_method import *
+from plantuml import *
 
-cd("/*/Models")
+cd("/*/Specific Requirements")
+Chapter("Models")
+cd("./-")
 
 PlantUML("UML Example","""
 Alice -> Bob: A

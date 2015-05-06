@@ -347,7 +347,7 @@ on the respective node. ::
 
     node("/").dump()
 
-Compare the PDF output and the original files (``meeting_scheduler.py`` and ``example_project.py``).
+Compare the PDF output and the original files (``meeting_scheduler.py`` and ``example-project.py``).
 
 Figures
 -------
@@ -491,6 +491,85 @@ document.
 Specific requirements modeling techniques are available as separate modules.
 
 
+Modular Documents
+=================
+
+This is a short description about the modular capabilities of Doref, to keep a good high-level structure. These are all
+just suggestions, but you might take inspiration from that to create your own document.
+
+Project structure
+-----------------
+
+Create a clear structure of the whole project this way:
+
+ * create a directory only for the project (for example *_myproject*)
+ * create two other directories inside the project directory, one for python sub files, the other one for images. Since you'll have
+   to write their name quite often, choose short names. A suggestion would be simply *content* and *img*.
+ * create your python-File (for example *myProject.py*) in the python root folder
+
+Import sub files
+----------------
+
+To add a sub file use ::
+
+    from path_to_content.subfile import *
+
+Example
+-------
+
+As an example we import two chapters to a document (see ``example_modular_project.py``):
+
+Code snippet ``example_modular_project.py`` ::
+
+    ...
+    IEEE830SRS("Software Requirements for Adaptive Control of Vacuum Cleaner",
+           [["Erik Kamsties and Fabian Kneer", "RE Research Group", "FH Dortmund"]],
+           {'language': 'english', 'paper': 'a4', 'font': '11pt'})
+
+    from _example_modular_project.content.chapter1 import *
+    from _example_modular_project.content.chapter2 import *
+
+    node("/").genPDF()
+
+Code snippet ``chapter1.py`` ::
+
+    from example_method import *
+
+    cd("/*/Specific Requirements")
+
+    Chapter("Customer Requirements")
+    cd("./-")
+
+    Req("Clean at night",
+        "The robot shall clean the appartment at night.",
+        {'Priority': 1,
+         'Effort': 20,
+         'Optional': 1})
+    ...
+    Figure("RE - World, Documents, and Workflows", './_example_modular_project/img/model.png',
+       "This figure shows the main corner stones of RE.",
+       {'size': 'fit'})
+
+
+Code snippet ``chapter2.py`` ::
+
+    ...
+    from example_method import *
+    from plantuml import *
+
+    cd("/*/Specific Requirements")
+    Chapter("Models")
+    cd("./-")
+
+    PlantUML("UML Example","""
+        Alice -> Bob: A
+        Bob --> Alice: B
+        Alice -> Bob: C
+        Bob --> Alice: D
+        """, "Example: plantUML Seq-Diagramm")
+
+In a sub file we need to import modules which are used in this sub file. Every part of a sub file is added to the
+main file at the position of the import.
 
 Define Workflows
 ================
@@ -546,9 +625,9 @@ For example, a Requirement needs a short name and a description, while an Inform
 needs a description. When you create an information with a short name and a description
 (like a requirement) you will see a message similar to the following one: ::
 
-    C:\Python34\python.exe D:/Kamsties/.../example_project.py
+    C:\Python34\python.exe D:/Kamsties/.../example-project.py
     Traceback (most recent call last):
-      File "D:/Kamsties/.../example_project.py", line 40, in <module>
+      File "D:/Kamsties/.../example-project.py", line 40, in <module>
         Inf("Clean", "The vacuum cleaner should not disturb the persons living in the apartment.")
       File "D:/Kamsties/.../ref.py", line 456, in __init__
         properties['Type'] = 'Information'

@@ -5,7 +5,7 @@ from example_method import *
 from gui import *
 from plantuml import *
 #------------------------------------------------------------
-# example_project.py
+# example_modular_project.py
 # Smart vacuum cleaner
 # A fragmentary project documentation
 #------------------------------------------------------------

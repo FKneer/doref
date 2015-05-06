@@ -1,6 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+'''
+Description
+===========
+This module implements a GUI to show the structure of the RE tree of a project.
+To show the Tree use the following function ::
+
+    ShowTree(node)
+
+as an example ::
+
+    ShowTree(node("/"))
+
+This will open an window with the structure from the root to the leafs of the Tree.
+If you only want to show the structure of an generated document, use the node of the document as a method parameter ::
+
+    ShowTree(node("/*/Software Requirements for Meeting Scheduler System"))
+
+'''
+
 import tkinter as tk
 import tkinter.ttk as ttk
 from ref import *
@@ -9,6 +28,7 @@ from ref import *
 class ShowTree:
     def __init__(self, root):
         self.root = tk.Tk()
+        self.root.title("RE Tree")
         self.tree = ttk.Treeview()
         self.tree.pack(fill="both", expand="YES")
         self.world = root

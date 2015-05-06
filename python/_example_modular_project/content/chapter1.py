@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 
 
-from _test_project.structur import *
+from example_method import *
 
-cd("/*/Customer Requirements")
+
+cd("/*/Specific Requirements")
+
+Chapter("Customer Requirements")
+cd("./-")
 
 Req("Clean at night",
     "The robot shall clean the appartment at night.",
@@ -24,24 +28,7 @@ cd("./-")
 Inf("The vacuum cleaner should not disturb the persons living in the apartment.")
 cd("..")
 
-
-Inf("Porto (port. Aussprache ['poɾtu]) ist die "
-    "Hauptstadt des gleichnamigen Distriktes in "
-    "Portugal und liegt am Douro vor dessen Mündung "
-    "in den Atlantischen Ozean. Mit circa 237.000 Einwohnern "
-    "(port. portuenses; dt. Portuenser genannt) ist sie "
-    "nach Lissabon und ihrer Nachbarstadt Vila Nova de Gaia "
-    "die drittgrößte Stadt des Landes. ")
-
-
-Inf('''Der rund 1,29 Millionen[3]
-    Einwohner zählende Ballungsraum Grande Porto rangiert
-    landesweit jedoch an zweiter Stelle. Porto ist eine der ältesten
-    europäischen Städte, sie wird gern als die „Hauptstadt
-    des Nordens“ bezeichnet.''')
-
-
-Figure("RE - World, Documents, and Workflows", './_example_project/model.png',
+Figure("RE - World, Documents, and Workflows", './_example_modular_project/img/model.png',
        "This figure shows the main corner stones of RE.",
        {'size': 'fit'})
 
