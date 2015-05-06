@@ -395,4 +395,4 @@ Show("/*/SD-Model/*/Meeting Scheduler")
 Show("/*/Meeting Participant")
 Show("/*/Meeting Initiator")
 
-#node("/").genHTML(["ref", "istar", "ieee830"])
+node("/*/Meeting Scheduler System").genHTML(["ref", "istar", "ieee830"])

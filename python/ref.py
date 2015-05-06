@@ -1195,7 +1195,7 @@ class System(Node):
         title = self.getType() + ' " ' + self.name + '"\n'
         rstout = [title,
                   ("=" * (len(title) - 1)) + "\n\n"]
-        print(self.parent.name)
+
         if self.parent is not None:
             rstout.append("Context:\n")
             rstout.append("--------\n\n")
