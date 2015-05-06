@@ -1110,6 +1110,7 @@ class System(Node):
             outfile.writelines(l)
         outfile.close()
 
+
     def genDocu(self, module):
         vDir = os.path.abspath(Document.path + "/rst/")
         filename = vDir + '/' + module + '.rst'
@@ -1145,7 +1146,7 @@ class System(Node):
             sub = 0
             project = 0
             for n in self.nodes:
-                if isinstance(n, System) and n is not index:
+                if isinstance(n, System):
                     sub += 1
                 if isinstance(n, Project):
                     project += 1
@@ -1157,10 +1158,14 @@ class System(Node):
                 rstout.append(" :titlesonly:" + "\n")
                 rstout.append(" :maxdepth: 4" + "\n\n")
                 for n in self.nodes:
-                    if isinstance(n, System) and self is not index:
-                        content = n.name + ".rst"
-                        content = content.replace(' ', '_')
-                        rstout.append(" " + content + "\n")
+                    if isinstance(n, System):
+                        if n is not index:
+                            content = n.name + ".rst"
+                            content = content.replace(' ', '_')
+                            rstout.append(" " + content + "\n")
+                        else:
+                            content = ":ref:`/*/"+ n.name +"`"
+                            rstout.append(content)
             if project > 0:
                 rstout.append("\nDeveloped by Project:" + "\n")
                 rstout.append("---------------------" + "\n\n")
@@ -1321,13 +1326,15 @@ class Project(Node):
         outfile = open(opfile, 'w', encoding='utf-8')
 
         title = self.getType() + ' " ' + self.name + '"\n'
-        rstout = [title, ("=" * (len(title) - 1)) + "\n\n"]
+        rstout = [".. _/*/" + self.name + ":" + "\n\n",
+                  title,
+                  ("=" * (len(title) - 1)) + "\n\n"]
         sub = 0
         folder = 0
         product = 0
         workflow = 0
         for n in self.nodes:
-            if isinstance(n, Project) and n is not index:
+            if isinstance(n, Project):
                 sub += 1
             if isinstance(n, Folder):
                 folder += 1
@@ -1343,10 +1350,14 @@ class Project(Node):
             rstout.append(" :titlesonly:" + "\n")
             rstout.append(" :maxdepth: 4" + "\n\n")
             for n in self.nodes:
-                if isinstance(n, Project) and self is not index:
-                    content = n.name + ".rst"
-                    content = content.replace(' ', '_')
-                    rstout.append(" " + content + "\n")
+                if isinstance(n, Project):
+                    if n is not index:
+                        content = n.name + ".rst"
+                        content = content.replace(' ', '_')
+                        rstout.append(" " + content + "\n")
+                    else:
+                        content = ":ref:`/*/" + n.name + "`"
+                        rstout.append(content)
         if folder > 0:
             rstout.append("\nFolder:" + "\n")
             rstout.append("-------" + "\n\n")
@@ -1877,7 +1888,7 @@ class Figure(TextElement):
             properties['Type'] = 'Information'
         TextElement.__init__(self, caption, text, properties, pNode)
         self.figure = figure
-        if self.figure is not None and set("äöü").intersection(set(self.figure)):
+        if self.figure is not None and set("äöüß").intersection(set(self.figure)):
             raise TypeError("No umlaut allowed in file names!")
 
     def bodyTeX(self):

@@ -13,19 +13,19 @@ from plantuml import *
 # Example RE Sceanrio: Stakeholder have conflicts
 
 w = World("My Smart Home")
-a = System("A",w)
-b = System("B",w)
-c = System("C",w)
+a = System("A", w)
+b = System("B", w)
+c = System("C", w)
 A1 = System("A1",a)
 A2 = System("A2",a)
 B1 = System("Vacuum Cleaner", b)
 B11 = System("B11",B1)
 C1 = System("C1",c)
 
-p = Project("Adaptive Control", B1)
+p1 = Project("Adaptive Control", B1)
+p2 = Project("Project Test",p1)
 
 cd("/*/Adaptive Control")
-node("/*/Adaptive Control").dump()
 Folder("Protocols")
 Folder("Specifications")
 cd("./-")
@@ -271,7 +271,7 @@ print("-------------------------------")
 
 #w.dump()
 
-w.genPDF()
+node("/").genPDF()
 node("/*/Vacuum Cleaner").genHTML(["ref", "istar", "ieee830"])
 
 

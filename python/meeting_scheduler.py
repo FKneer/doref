@@ -5,6 +5,7 @@ from ieee830 import *
 from istar import *
 from ref import *
 from plantuml import *
+from gui import *
 w = World("Office Automation")
 cd("./-")
 System("Meeting Scheduler System")
@@ -399,3 +400,5 @@ Show("/*/Meeting Participant")
 Show("/*/Meeting Initiator")
 
 node("/*/Meeting Scheduler System").genHTML(["ref", "istar", "ieee830"])
+
+ShowTree(node("/"))
