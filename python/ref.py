@@ -1181,7 +1181,7 @@ class System(Node):
                    r"master_doc = 'index'" + '\n\n',
                    r"exclude_patterns = []" + '\n\n',
                    r"pygments_style = 'sphinx'" + "\n\n",
-                   r"html_theme = 'default'" + "\n\n",
+                   r"html_theme = 'sphinxdoc'" + "\n\n",
                    r"html_static_path = ['../../etc/_static']" + "\n\n",
                    r"htmlhelp_basename = 'Test'" + "\n\n"]
 
