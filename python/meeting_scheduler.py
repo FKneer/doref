@@ -399,6 +399,6 @@ Show("/*/SD-Model/*/Meeting Scheduler")
 Show("/*/Meeting Participant")
 Show("/*/Meeting Initiator")
 
-node("/*/Meeting Scheduler System").genHTML(["ref", "istar", "ieee830", "gui"])
+node("/*/Meeting Scheduler System").genHTML(["ref", "istar", "ieee830"])
 
-ShowTree(node("/*/Software Requirements for Meeting Scheduler System"))
+#ShowTree(node("/*/Software Requirements for Meeting Scheduler System"))

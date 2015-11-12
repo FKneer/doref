@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from example_method import *
+from ieee830 import *
 
 #------------------------------------------------------------
 # example_modular_project.py
@@ -30,4 +31,4 @@ from _example_modular_project.content.chapter2 import *
 
 node("/").dump()
 node("/").genPDF()
-node("/").genHTML(["ref", "ieee830", "gui", "plantuml", "istar"])
+node("/").genHTML(["ref", "ieee830", "plantuml", "istar"])

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 Description
 ===========
 This module implements a GUI to show the structure of the RE tree of a project.
@@ -17,8 +17,7 @@ This will open an window with the structure from the root to the leafs of the Tr
 If you only want to show the structure of an generated document, use the node of the document as a method parameter ::
 
     ShowTree(node("/*/Software Requirements for Meeting Scheduler System"))
-
-'''
+"""
 
 import tkinter as tk
 import tkinter.ttk as ttk

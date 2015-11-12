@@ -3,6 +3,7 @@
 
 from example_method import *
 from plantuml import *
+from ieee830 import *
 #------------------------------------------------------------
 # example_project.py
 # Smart vacuum cleaner
