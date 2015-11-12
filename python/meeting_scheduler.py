@@ -42,7 +42,7 @@ Inf('''
 The textual description in this document was prepared by Axel van Lamsweerde and updated by Mary Shaw.
 ''')
 
-cd("/*/System Overview")
+cd("/*/Scope")
 Chapter("Scheduling Meetings: Domain Theory")
 cd("./-")
 Inf('''
