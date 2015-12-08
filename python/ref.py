@@ -1930,7 +1930,7 @@ class Table(TextElement):
         texOut.append(r'\hline' + '\n')
         head = True
         for line in self.table:
-            texOut.append(' & '.join(line))
+            texOut.append(' & '.join(getUnicodeStr(cell) for cell in line))
             texOut.append('\\\\ \n')
             if head:
                 texOut.append(r'\hline' + '\n')
