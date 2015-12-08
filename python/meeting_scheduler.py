@@ -5,7 +5,9 @@ from ieee830 import *
 from istar import *
 from ref import *
 from plantuml import *
-w = World("Office Automation")
+from gui import *
+
+World("Office Automation")
 cd("./-")
 System("Meeting Scheduler System")
 cd("./-")
@@ -16,7 +18,6 @@ cd("./-")
 Activity("Initiate RE Project", "In this activity, the folder structure and the (empty) documents are created.")
 
 cd("/*/Meeting Scheduler/*/Meeting Scheduler Development")
-# Folder("Protocols")
 Folder("Specifications")
 cd("./-")
 IEEE830SRS("Software Requirements for Meeting Scheduler System",
@@ -41,7 +42,7 @@ Inf('''
 The textual description in this document was prepared by Axel van Lamsweerde and updated by Mary Shaw.
 ''')
 
-cd("/*/System Overview")
+cd("/*/Scope")
 Chapter("Scheduling Meetings: Domain Theory")
 cd("./-")
 Inf('''
@@ -364,7 +365,7 @@ refineDependency(node("/*/Enter Avail Dates D"), node("/*/Find Agreeable Date Us
 refineDependency(node("/*/Agreement D"), node("/*/Agree To Date"), node("/*/Obtain Agreement"))
 refineDependency(node("/*/Attends Meeting D"), node("/*/Attend Meeting"), node("/*/Organize Meeting"))
 
-w.genPDF()
+node("/").genPDF()
 
 cd("/*/Goal-oriented RE")
 EvaluateGoalModel("Evaluate Goal Model")
@@ -386,15 +387,18 @@ MakeJudgements("Make judgement after inspection of goal model", labelList={
     '/*/Meeting Participant/*/User Friendly': 'Conflict',
     '/*/Meeting Participant/*/Richer Medium': 'Conflict',
     '/*/Meeting Initiator/*/Low Effort': 'Partially Satisfied',
-    '/*/Meeting Initiator/*/Quick': 'Partially Satisfied'})
+    '/*/Meeting Initiator/*/Quick': 'Partially Satisfied'}).do()
 
-PropagateLabels("First Propagate Labels after Human Judgement", goalModel=node("/*/SD-Model of Meeting Schedule"))
+PropagateLabels("First Propagate Labels after Human Judgement",
+                guideline="Propagate with new values after a human judgement. For more information see "
+                          ":ref:`/*/Initially Propagate Labels`",
+                goalModel=node("/*/SD-Model of Meeting Schedule"))
 
 Show("/*/SD-Model")
 Show("/*/SD-Model/*/Meeting Scheduler")
 Show("/*/Meeting Participant")
 Show("/*/Meeting Initiator")
 
-node("/").genHTML(["ref", "istar", "ieee830"])
+node("/*/Meeting Scheduler System").genHTML(["ref", "istar", "ieee830"])
 
-
+#ShowTree(node("/*/Software Requirements for Meeting Scheduler System"))
