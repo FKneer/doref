@@ -725,7 +725,7 @@ def findReferenceAfterUnicode(text):
 
 def findLink(text):
     expression = r' `( [^<`]* ) \< ( [^>]* ) \>`\\_ '
-    replace = r'\href{\2}{\1}'
+    replace = r'\\href{\2}{\1}'
     p = re.compile(expression, re.VERBOSE + re.UNICODE)
     text = p.sub(replace, text)
     return text
