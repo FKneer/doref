@@ -1320,17 +1320,17 @@ class Intention(ModelElement):
 
         if 'Label' in self.properties:
             if self.properties['Label'] == 'Satisfied':
-                image = '_istar/sL.png'
+                image = os.getcwd()+'/_istar/sL.png'
             elif self.properties['Label'] == 'Partially Satisfied':
-                image = '_istar/psL.png'
+                image = os.getcwd()+'/_istar/psL.png'
             elif self.properties['Label'] == 'Denied':
-                image = '_istar/dL.png'
+                image = os.getcwd()+'/_istar/dL.png'
             elif self.properties['Label'] == 'Partially Denied':
-                image = '_istar/pdL.png'
+                image = os.getcwd()+'/_istar/pdL.png'
             elif self.properties['Label'] == 'Unknown':
-                image = '_istar/uL.png'
+                image = os.getcwd()+'/_istar/uL.png'
             elif self.properties['Label'] == 'Conflict':
-                image = '_istar/cL.png'
+                image = os.getcwd()+'/_istar/cL.png'
         return image
 
 
@@ -1401,14 +1401,14 @@ class SoftGoal(Intention):
 
         :param dot:
         """
-        imageName = '_istar/sg.png'
+        imageName = os.getcwd()+'/_istar/sg.png'
         if 'NodeType' in self.properties:
             if self.properties['NodeType'] == 'root':
-                imageName = '_istar/sgr.png'
+                imageName = os.getcwd()+'/_istar/sgr.png'
             elif self.properties['NodeType'] == 'leaf':
-                imageName = '_istar/sgl.png'
+                imageName = os.getcwd()+'/_istar/sgl.png'
             elif self.properties['NodeType'] == 'depender':
-                imageName = '_istar/sgd.png'
+                imageName = os.getcwd()+'/_istar/sgd.png'
 
         if 'Label' in self.properties and self.properties['Label'] != 'None':
             dot.node(str(self.id),
